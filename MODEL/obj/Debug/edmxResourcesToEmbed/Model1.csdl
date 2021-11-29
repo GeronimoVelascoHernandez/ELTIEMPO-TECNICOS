@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TECNICOSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Elemento">
+    <Key>
+      <PropertyRef Name="idElemento" />
+    </Key>
+    <Property Name="idElemento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TecnicoElementoes" Relationship="Self.FK__TecnicoEl__idEle__2C3393D0" FromRole="Elemento" ToRole="TecnicoElemento" />
+  </EntityType>
+  <EntityType Name="Sucursal">
+    <Key>
+      <PropertyRef Name="idSucursal" />
+    </Key>
+    <Property Name="idSucursal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Tecnicoes" Relationship="Self.FK__Tecnico__IdSucur__286302EC" FromRole="Sucursal" ToRole="Tecnico" />
+  </EntityType>
+  <EntityType Name="Tecnico">
+    <Key>
+      <PropertyRef Name="idTecnico" />
+    </Key>
+    <Property Name="idTecnico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="salario" Type="Int32" Nullable="false" />
+    <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Sucursal" Relationship="Self.FK__Tecnico__IdSucur__286302EC" FromRole="Tecnico" ToRole="Sucursal" />
+    <NavigationProperty Name="TecnicoElementoes" Relationship="Self.FK__TecnicoEl__idTec__2B3F6F97" FromRole="Tecnico" ToRole="TecnicoElemento" />
+  </EntityType>
+  <EntityType Name="TecnicoElemento">
+    <Key>
+      <PropertyRef Name="idTecnicoElemento" />
+    </Key>
+    <Property Name="idTecnicoElemento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cantidad" Type="Int32" Nullable="false" />
+    <Property Name="idTecnico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idElemento" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Elemento" Relationship="Self.FK__TecnicoEl__idEle__2C3393D0" FromRole="TecnicoElemento" ToRole="Elemento" />
+    <NavigationProperty Name="Tecnico" Relationship="Self.FK__TecnicoEl__idTec__2B3F6F97" FromRole="TecnicoElemento" ToRole="Tecnico" />
+  </EntityType>
+  <Association Name="FK__TecnicoEl__idEle__2C3393D0">
+    <End Role="Elemento" Type="Self.Elemento" Multiplicity="1" />
+    <End Role="TecnicoElemento" Type="Self.TecnicoElemento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Elemento">
+        <PropertyRef Name="idElemento" />
+      </Principal>
+      <Dependent Role="TecnicoElemento">
+        <PropertyRef Name="idElemento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tecnico__IdSucur__286302EC">
+    <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
+    <End Role="Tecnico" Type="Self.Tecnico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sucursal">
+        <PropertyRef Name="idSucursal" />
+      </Principal>
+      <Dependent Role="Tecnico">
+        <PropertyRef Name="IdSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TecnicoEl__idTec__2B3F6F97">
+    <End Role="Tecnico" Type="Self.Tecnico" Multiplicity="1" />
+    <End Role="TecnicoElemento" Type="Self.TecnicoElemento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tecnico">
+        <PropertyRef Name="idTecnico" />
+      </Principal>
+      <Dependent Role="TecnicoElemento">
+        <PropertyRef Name="idTecnico" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TECNICOSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Elementoes" EntityType="Self.Elemento" />
+    <EntitySet Name="Sucursals" EntityType="Self.Sucursal" />
+    <EntitySet Name="Tecnicoes" EntityType="Self.Tecnico" />
+    <EntitySet Name="TecnicoElementoes" EntityType="Self.TecnicoElemento" />
+    <AssociationSet Name="FK__TecnicoEl__idEle__2C3393D0" Association="Self.FK__TecnicoEl__idEle__2C3393D0">
+      <End Role="Elemento" EntitySet="Elementoes" />
+      <End Role="TecnicoElemento" EntitySet="TecnicoElementoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tecnico__IdSucur__286302EC" Association="Self.FK__Tecnico__IdSucur__286302EC">
+      <End Role="Sucursal" EntitySet="Sucursals" />
+      <End Role="Tecnico" EntitySet="Tecnicoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TecnicoEl__idTec__2B3F6F97" Association="Self.FK__TecnicoEl__idTec__2B3F6F97">
+      <End Role="Tecnico" EntitySet="Tecnicoes" />
+      <End Role="TecnicoElemento" EntitySet="TecnicoElementoes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

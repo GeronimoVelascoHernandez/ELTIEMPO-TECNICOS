@@ -1,0 +1,284 @@
+﻿@model IEnumerable<MODEL.ViewModels.TecnicoViewModel>
+@using System.Configuration
+
+@{
+    ViewBag.Title = "Técnicos";
+
+}
+<h2>Listado de técnicos</h2>
+<p>
+    <a class="btn btn-primary" data-toggle="modal" data-target="#CreateModal">Crear</a>
+</p>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.idTecnico)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.salario)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.sucursal)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.cantidadElementos)
+            </th>
+            <th scope="col">Acciones</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.idTecnico)
+                    <input type="hidden" id="idTecnico_@item.idTecnico" value="@item.idTecnico" />
+                    <input type="hidden" id="nombre_@item.idTecnico" value="@item.nombre" />
+                    <input type="hidden" id="salario_@item.idTecnico" value="@item.salario" />
+                    <input type="hidden" id="IdSucursal_@item.idTecnico" value="@item.IdSucursal" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.salario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sucursal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidadElementos)
+                </td>
+                <td>
+                    <button type="button" value="@Html.DisplayFor(modelItem => item.idTecnico)"
+                            class="btn btn-warning editButton" data-toggle="modal" data-target="#EditModal">
+                        Editar
+                    </button>
+                    <button type="button" value="@Html.DisplayFor(modelItem => item.idTecnico)"
+                            class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteModal" id="deleteButton">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+<!-- Crear técnico -->
+<div class="modal fade" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="createAriaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-primary text-center">Creación de técnicos</h2>
+            </div>
+            <div class="modal-body text-center">
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-md-2">Código</label>
+                                <hr />
+                                <div class="col-md-10">
+                                    <input type="text" required id="idTecnico" pattern="^[A-Za-z0-9_-]*$" value="" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-md-2">Nombre</label>
+                                <hr />
+                                <div class="col-md-10">
+                                    <input type="text" id="nombre" name="nombre"  pattern="^[A-Za-z0-9_-]*$" required value="" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-md-2">Salario</label>
+                                <hr />
+                                <div class="col-md-10">
+                                    <input type="text" id="salario" min="1" pattern="^[0-9_-]*$"  name="salario" required value="" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-md-2">Sucursal</label>
+                                <hr />
+                                <div class="col-md-10">
+                                    <select  class="form-control" id="IdSucursal">
+                                        <option value="">Seleccione una sucursal</option>
+                                        @{
+                                            foreach (var itemSucursal in (List<MODEL.ViewModels.SucursalViewModel>)ViewBag.SucursalsList)
+                                            {
+                                                <option value="@itemSucursal.idSucursal">@itemSucursal.nombre</option>
+
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <hr />
+                                    <label class="control-label">Elementos</label>
+                                    <select required class="form-control" id="element">
+                                        <option value="">Seleccione un elemento</option>
+                                        @{
+                                            foreach (var itemElemento in (List<MODEL.ViewModels.ElementoViewModel>)ViewBag.ElementsList)
+                                            {
+                                                <option value="@itemElemento.idElemento">@itemElemento.nombre</option>
+
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <hr />
+                                    <label class="control-label">Cantidad</label>
+                                    <input type="number" required name="cantidad" min="1" maxlength="10" max="10" id="cantidad" class="form-control" />
+                                </div>
+                                <div class="col-md-1">
+                                    <hr />
+                                    <label class="control-label">Agregar</label>
+                                    <a href="#" class="btn btn-info addElement">+</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <hr />
+                                    <label class="control-label">Lista de elementos</label>
+                                    <div class="form-group " id="list-elements">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+                }
+
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+                <button type="button" id="delete" class="btn btn-primary CreateButtonModal">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Editar técnico -->
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="deleteAriaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-primary text-center" id="EditLabel">Edición de técnicos</h2>
+            </div>
+            <div class="modal-body text-center">
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <input type="hidden" id="idTecnico_Edit" value="" class="form-control" />
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-2">Nombre</label>
+                            <hr />
+                            <div class="col-md-10">
+                                <input type="text" required id="nombre_Edit"  pattern="^[A-Za-z0-9_-]*$" value="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-2">Salario</label>
+                            <hr />
+                            <div class="col-md-10">
+                                <input type="text" required id="salario_Edit"  pattern="^[0-9_-]*$" value="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-2">Sucursal</label>
+                            <hr />
+                            <div class="col-md-10">
+                                <select required class="form-control" id="sucursal_Edit">
+                                    <option value="">Seleccione una sucursal</option>
+                                    @{
+                                        foreach (var itemSucursal in (List<MODEL.ViewModels.SucursalViewModel>)ViewBag.SucursalsList)
+                                        {
+                                            <option value="@itemSucursal.idSucursal">@itemSucursal.nombre</option>
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-6">
+                                <hr />
+                                <label class="control-label">Elementos</label>
+                                <select required class="form-control" id="edit-element">
+                                    <option value="">Seleccione un elemento</option>
+                                    @{
+                                        foreach (var itemElemento in (List<MODEL.ViewModels.ElementoViewModel>)ViewBag.ElementsList)
+                                        {
+                                            <option value="@itemElemento.idElemento">@itemElemento.nombre</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <hr />
+                                <label class="control-label">Cantidad</label>
+                                <input type="number" min="1" maxlength="10" max="10" required id="edit-cantidad" class="form-control" />
+                            </div>
+                            <div class="col-md-1">
+                                <hr />
+                                <label class="control-label">Agregar</label>
+                                <a href="#" class="btn btn-info editElement">+</a>
+                            </div>
+                            <div class="col-md-12">
+                                <hr />
+                                <label class="control-label">Lista de elementos</label>
+                                <div class="form-group " id="list-edit-elements">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-success closeModal" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="EditButtonModal">Actualizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Eliminar técnico -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteAriaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-danger text-center" id="deleteLabel">Zona de eliminación de técnicos</h2>
+            </div>
+            <div class="modal-body text-center">
+                <h4 class="text-info">¿Esta seguro que desea eliminar este técnico de manera permanente?</h4>
+            </div>
+            <div class="modal-footer text-center">
+                <input type="hidden" id="inputDeleteModal" value="0" />
+                <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+                <button type="button" id="delete" class="btn btn-danger deleteButtonModal">Eliminar permanentemente</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/Scripts/main.js")

@@ -1,0 +1,15 @@
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\bin\Debug\DAL.dll
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\bin\Debug\DAL.pdb
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\bin\Debug\MODEL.dll
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\bin\Debug\MODEL.pdb
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\obj\Debug\DAL.csproj.AssemblyReference.cache
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\obj\Debug\DAL.csproj.CopyComplete
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\obj\Debug\DAL.dll
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\obj\Debug\DAL.pdb
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\bin\Debug\EntityFramework.dll
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\bin\Debug\MODEL.dll.config
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\bin\Debug\EntityFramework.xml
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\bin\Debug\DAL.dll.config
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\mimo0\source\repos\ELTIEMPO-TECNICO-ELEMENTOS\DAL\bin\Debug\EntityFramework.SqlServer.xml
